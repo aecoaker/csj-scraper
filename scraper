@@ -2,14 +2,12 @@ library(rvest)
 
 #count number of pages
 
-#iterate through it using the code chunk below
-
+#create a list of job descriptions by iterating through them
 page1 <- read_html("https://www.civilservicejobs.service.gov.uk/csr/index.cgi?SID=cGFnZWNsYXNzPUpvYnMmcGFnZWFjdGlvbj1zZWFyY2hieWNvbnRleHRpZCZvd25lcnR5cGU9ZmFpciZvd25lcj01MDcwMDAwJnVzZXJzZWFyY2hjb250ZXh0PTEyNjM5NjcyMCZyZXFzaWc9MTYxOTY1MDkxNy1hZGRiNmRmYTA3ODZmMjVmM2I2OGRiYjc4MzY0YTAzNGYwMjUzZTA2")
 page1jobs <- page1 %>%
   html_nodes(".search-results-job-box-title") %>%
   html_nodes("a") %>%
   html_attr("href")
-
 n <- length(page1jobs)
 jobdescs <- vector("list", length = n)
 for (i in 1:n) {
@@ -18,6 +16,6 @@ for (i in 1:n) {
     html_text()
 }
 
-#deal with the text, nlp? want to only look at ads with R and SQL in them
+#analyse the text to only look at ads with keywords: 'data analysis', ('present'|'communicate'), ('Tableau'|'Power BI'|'QuickSight')
 
-#want some sort of notification
+#order and format results to highlight those with keywords 'SQL', 'R', 'python'
